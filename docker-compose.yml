@@ -1,0 +1,197 @@
+version: '3.8'
+
+services:
+  loc_api:
+    image: nsulliv7/ser516-loc:latest
+    volumes:
+      - ./src:/app/src
+      - shared-repos:/shared/repos
+    ports:
+      - "${LOC_PORT}:5002"
+    networks:
+      - analysis-network
+
+  mttr_api:
+    image: nsulliv7/ser516-mttr:latest
+    volumes:
+      - ./src:/app/src
+      - shared-repos:/shared/repos
+    ports:
+      - "${MTTR_PORT}:5003"
+    networks:
+      - analysis-network
+
+  cc_api:
+    image: nsulliv7/ser516-cc:latest
+    volumes:
+      - ./src:/app/src
+      - shared-repos:/shared/repos
+    ports:
+      - "${CC_PORT}:5001"
+    networks:
+      - analysis-network
+
+  defects_api:
+    image: nsulliv7/ser516-defects-over-time:latest
+    ports:
+      - "${DEFECTS_PORT}:5004"
+    networks:
+      - analysis-network
+
+  cyclo_api:
+    image: nsulliv7/ser516-cyclo:latest
+    ports:
+      - "${CYCLO_PORT}:5005"
+    networks:
+      - analysis-network
+    volumes:
+      - shared-repos:/shared/repos
+
+  hal_api:
+    image: nsulliv7/ser516-hal:latest
+    ports:
+      - "${HAL_PORT}:5006"
+    networks:
+      - analysis-network
+    volumes:
+      - shared-repos:/shared/repos
+
+  ici_api:
+    image: nsulliv7/ser516-ici:latest
+    ports:
+      - "${ICI_PORT}:5009"
+    networks:
+      - analysis-network
+    volumes:
+      - shared-repos:/shared/repos
+
+  java_backend:
+    image: mkapure/app-java-backend:latest
+    ports:
+      - "5007:5007"
+    networks:
+      - analysis-network
+
+  comment_coverage:
+    image: mkapure/app-code-comment-coverage-backend:latest
+    ports:
+      - "5010:5010"
+    networks:
+      - analysis-network
+
+  instability:
+    image: smitmaheshpanchal/instability:latest
+    ports:
+      - "5011:5011"
+    networks:
+      - analysis-network
+
+  defect_score:
+    image: smitmaheshpanchal/defect-score:latest
+    ports:
+      - "5012:5012"
+    networks:
+      - analysis-network
+
+  lcomhs:
+    image: smitmaheshpanchal/lcomhs:latest
+    ports:
+      - "5013:5013"
+    networks:
+      - analysis-network
+
+  lcom4:
+    image: smitmaheshpanchal/lcom4:latest
+    ports:
+      - "5014:5014"
+    networks:
+      - analysis-network
+
+  defect_density:
+    image: smitmaheshpanchal/defect-density:latest
+    ports:
+      - "5015:5015"
+    networks:
+      - analysis-network
+
+  afferent_coupling:
+    image: smitmaheshpanchal/afferent-coupling:latest
+    ports:
+      - "5016:5016"
+    networks:
+      - analysis-network
+
+  efferent_coupling:
+    image: smitmaheshpanchal/efferent-coupling:latest
+    ports:
+      - "5017:5017"
+    networks:
+      - analysis-network
+
+  frontend:
+    image: patilaniket14/metric-frontend:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - analysis-network
+
+  middleware:
+    image: smitmaheshpanchal/middleware:latest
+    ports:
+      - "${GATEWAY_PORT}:5000"
+    environment:
+      - CC_PORT=${CC_PORT}
+      - LOC_PORT=${LOC_PORT}
+      - MTTR_PORT=${MTTR_PORT}
+      - DEFECTS_PORT=${DEFECTS_PORT}
+      - CYCLO_PORT=${CYCLO_PORT}
+      - HAL_PORT=${HAL_PORT}
+      - ICI_PORT=${ICI_PORT}
+      - CC_NAME=${CC_NAME}
+      - LOC_NAME=${LOC_NAME}
+      - MTTR_NAME=${MTTR_NAME}
+      - DEFECTS_NAME=${DEFECTS_NAME}
+      - CYCLO_NAME=${CYCLO_NAME}
+      - HAL_NAME=${HAL_NAME}
+      - ICI_NAME=${ICI_NAME}
+    depends_on:
+      - loc_api
+      - cc_api
+      - cyclo_api
+      - hal_api
+      - ici_api
+      - mttr_api
+      - defects_api
+    volumes:
+      - shared-repos:/shared/repos
+    networks:
+      - analysis-network
+
+  benchmark:
+    image: smitmaheshpanchal/benchmark:latest
+    ports:
+      - "5018:5018"
+    networks:
+      - analysis-network
+
+  fan_in:
+    image: mkapure/app-fan-in-service:latest
+    ports:
+      - "5019:5019"
+    networks:
+      - analysis-network
+
+  fan_out:
+    image: mkapure/app-fan-out-service:latest
+    ports:
+      - "5020:5020"
+    networks:
+      - analysis-network
+
+networks:
+  analysis-network:
+    name: analysis-network
+    driver: bridge
+
+volumes:
+  shared-repos:
