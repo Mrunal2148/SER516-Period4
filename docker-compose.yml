@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   loc_api:
     image: nsulliv7/ser516-loc:latest
@@ -65,78 +63,8 @@ services:
     volumes:
       - shared-repos:/shared/repos
 
-  java_backend:
-    image: mkapure/app-java-backend:latest
-    ports:
-      - "5007:5007"
-    networks:
-      - analysis-network
-
-  comment_coverage:
-    image: mkapure/app-code-comment-coverage-backend:latest
-    ports:
-      - "5010:5010"
-    networks:
-      - analysis-network
-
-  instability:
-    image: smitmaheshpanchal/instability:latest
-    ports:
-      - "5011:5011"
-    networks:
-      - analysis-network
-
-  defect_score:
-    image: smitmaheshpanchal/defect-score:latest
-    ports:
-      - "5012:5012"
-    networks:
-      - analysis-network
-
-  lcomhs:
-    image: smitmaheshpanchal/lcomhs:latest
-    ports:
-      - "5013:5013"
-    networks:
-      - analysis-network
-
-  lcom4:
-    image: smitmaheshpanchal/lcom4:latest
-    ports:
-      - "5014:5014"
-    networks:
-      - analysis-network
-
-  defect_density:
-    image: smitmaheshpanchal/defect-density:latest
-    ports:
-      - "5015:5015"
-    networks:
-      - analysis-network
-
-  afferent_coupling:
-    image: smitmaheshpanchal/afferent-coupling:latest
-    ports:
-      - "5016:5016"
-    networks:
-      - analysis-network
-
-  efferent_coupling:
-    image: smitmaheshpanchal/efferent-coupling:latest
-    ports:
-      - "5017:5017"
-    networks:
-      - analysis-network
-
-  frontend:
-    image: patilaniket14/metric-frontend:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - analysis-network
-
-  middleware:
-    image: smitmaheshpanchal/middleware:latest
+  clone_repo:
+    image: nsulliv7/ser516-middleware:latest
     ports:
       - "${GATEWAY_PORT}:5000"
     environment:
@@ -164,27 +92,6 @@ services:
       - defects_api
     volumes:
       - shared-repos:/shared/repos
-    networks:
-      - analysis-network
-
-  benchmark:
-    image: smitmaheshpanchal/benchmark:latest
-    ports:
-      - "5018:5018"
-    networks:
-      - analysis-network
-
-  fan_in:
-    image: mkapure/app-fan-in-service:latest
-    ports:
-      - "5019:5019"
-    networks:
-      - analysis-network
-
-  fan_out:
-    image: mkapure/app-fan-out-service:latest
-    ports:
-      - "5020:5020"
     networks:
       - analysis-network
 
