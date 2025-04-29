@@ -6,6 +6,13 @@ services:
     networks:
       - analysis-network
 
+  code-comment:
+    image: mkapure/app-code-comment-coverage-backend:${VERSION:-latest}
+    volumes:
+      - shared-repos:/shared/repos
+    networks:
+      - analysis-network
+
   mttr:
     image: nsulliv7/ser516-mttr:${VERSION:-latest}
     volumes:
@@ -51,7 +58,7 @@ services:
     ports:
       - "8080:5000"
     environment:
-      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici
+      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment
     depends_on:
       - loc
       - cc
@@ -60,6 +67,7 @@ services:
       - ici
       - mttr
       - defects-over-time
+      - code-comment
     volumes:
       - shared-repos:/shared/repos
     networks:
