@@ -1,95 +1,65 @@
 services:
-  loc_api:
+  loc:
     image: nsulliv7/ser516-loc:${VERSION:-latest}
     volumes:
-      - ./src:/app/src
       - shared-repos:/shared/repos
-    ports:
-      - "${LOC_PORT}:5002"
     networks:
       - analysis-network
 
-  mttr_api:
+  mttr:
     image: nsulliv7/ser516-mttr:${VERSION:-latest}
     volumes:
-      - ./src:/app/src
       - shared-repos:/shared/repos
-    ports:
-      - "${MTTR_PORT}:5003"
     networks:
       - analysis-network
 
-  cc_api:
+  cc:
     image: nsulliv7/ser516-cc:${VERSION:-latest}
     volumes:
-      - ./src:/app/src
       - shared-repos:/shared/repos
-    ports:
-      - "${CC_PORT}:5001"
     networks:
       - analysis-network
 
-  defects_api:
+  defects-over-time:
     image: nsulliv7/ser516-defects-over-time:${VERSION:-latest}
-    ports:
-      - "${DEFECTS_PORT}:5004"
     networks:
       - analysis-network
 
-  cyclo_api:
+  cyclo:
     image: nsulliv7/ser516-cyclo:${VERSION:-latest}
-    ports:
-      - "${CYCLO_PORT}:5005"
     networks:
       - analysis-network
     volumes:
       - shared-repos:/shared/repos
 
-  hal_api:
+  hal: 
     image: nsulliv7/ser516-hal:${VERSION:-latest}
-    ports:
-      - "${HAL_PORT}:5006"
     networks:
       - analysis-network
     volumes:
       - shared-repos:/shared/repos
-
-  ici_api:
+  
+  ici: 
     image: nsulliv7/ser516-ici:${VERSION:-latest}
-    ports:
-      - "${ICI_PORT}:5009"
     networks:
       - analysis-network
     volumes:
       - shared-repos:/shared/repos
 
-  clone_repo:
+  middleware:
     image: nsulliv7/ser516-middleware:${VERSION:-latest}
     ports:
-      - "${GATEWAY_PORT}:5000"
+      - "8080:5000"
     environment:
-      - CC_PORT=${CC_PORT}
-      - LOC_PORT=${LOC_PORT}
-      - MTTR_PORT=${MTTR_PORT}
-      - DEFECTS_PORT=${DEFECTS_PORT}
-      - CYCLO_PORT=${CYCLO_PORT}
-      - HAL_PORT=${HAL_PORT}
-      - ICI_PORT=${ICI_PORT}
-      - CC_NAME=${CC_NAME}
-      - LOC_NAME=${LOC_NAME}
-      - MTTR_NAME=${MTTR_NAME}
-      - DEFECTS_NAME=${DEFECTS_NAME}
-      - CYCLO_NAME=${CYCLO_NAME}
-      - HAL_NAME=${HAL_NAME}
-      - ICI_NAME=${ICI_NAME}
+      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici
     depends_on:
-      - loc_api
-      - cc_api
-      - cyclo_api
-      - hal_api
-      - ici_api
-      - mttr_api
-      - defects_api
+      - loc
+      - cc
+      - cyclo
+      - hal
+      - ici
+      - mttr
+      - defects-over-time
     volumes:
       - shared-repos:/shared/repos
     networks:
