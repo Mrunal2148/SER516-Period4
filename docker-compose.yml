@@ -107,6 +107,12 @@ services:
     networks:
       - analysis-network
 
+  client:
+    image: patilaniket14/metric-frontend:${VERSION:-latest}
+    ports:
+      - "${CLIENT_PORT}:5173"
+    restart: always
+
 networks:
   analysis-network:
     name: analysis-network
