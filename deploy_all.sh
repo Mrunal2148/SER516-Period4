@@ -24,13 +24,13 @@ images=(
 )
 
 # List of known images and their ports
-port_mapping="nsulliv7/ser516-defects-over-time:latest=5004
-nsulliv7/ser516-cc:latest=5001
-nsulliv7/ser516-cyclo:latest=5005
-nsulliv7/ser516-hal:latest=5006
-nsulliv7/ser516-ici:latest=5009
-nsulliv7/ser516-loc:latest=5002
-nsulliv7/ser516-mttr:latest=5003
+port_mapping="nsulliv7/ser516-defects-over-time:latest=5000
+nsulliv7/ser516-cc:latest=5000
+nsulliv7/ser516-cyclo:latest=5000
+nsulliv7/ser516-hal:latest=5000
+nsulliv7/ser516-ici:latest=5000
+nsulliv7/ser516-loc:latest=5000
+nsulliv7/ser516-mttr:latest=5000
 mkapure/app-java-backend:latest=8080
 mkapure/app-code-comment-coverage-backend:latest=5006
 gopu007/app-instability=8000
