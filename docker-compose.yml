@@ -15,6 +15,22 @@ services:
       - analysis-network
     restart: always
 
+  fogindex:
+    image: mkapure/fogindex:${VERSION:-latest}
+    volumes:
+      - shared-repos:/shared/repos
+    networks:
+      - analysis-network
+    restart: always
+
+  defect-stats:
+    image: mkapure/defect-stats:${VERSION:-latest}
+    volumes:
+      - shared-repos:/shared/repos
+    networks:
+      - analysis-network
+    restart: always
+
   mttr:
     image: nsulliv7/ser516-mttr:${VERSION:-latest}
     volumes:
@@ -108,7 +124,7 @@ services:
     ports:
       - "${GATEWAY_PORT}:5000"
     environment:
-      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment,lcomhs,lcom4,efferent-coupling,afferent-coupling
+      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment,lcomhs,lcom4,efferent-coupling,afferent-coupling,fogindex,defect-stats
       - MONGO_URI=mongodb://mongo:27017
       - STORE_METRICS_URL=http://store_metrics:5000/store_metrics
     volumes:
@@ -128,6 +144,9 @@ services:
       - efferent-coupling
       - afferent-coupling
       - store_metrics
+      - code-comment
+      - defect-stats
+      - fogindex
       - mongo
     restart: always
 
