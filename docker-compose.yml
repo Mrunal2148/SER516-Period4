@@ -15,6 +15,14 @@ services:
       - analysis-network
     restart: always
 
+  fogindex:
+    image: mkapure/fogindex:${VERSION:-latest}
+    volumes:
+      - shared-repos:/shared/repos
+    networks:
+      - analysis-network
+    restart: always
+
   mttr:
     image: nsulliv7/ser516-mttr:${VERSION:-latest}
     volumes:
