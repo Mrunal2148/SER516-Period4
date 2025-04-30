@@ -108,7 +108,7 @@ services:
       - analysis-network
 
   client:
-    image: patilaniket14/metric-frontend:${VERSION:-latest}
+    image: gopu007/app-frontend:${VERSION:-latest}
     ports:
       - "${CLIENT_PORT}:5173"
     restart: always
