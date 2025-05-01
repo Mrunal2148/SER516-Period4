@@ -160,7 +160,7 @@ services:
       - fan-in
       - store_metrics
       - code-comment
-      - defect-stats
+      - defects-stats
       - defects-triage
       - fogindex
       - mongo
