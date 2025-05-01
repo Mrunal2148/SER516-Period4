@@ -1,14 +1,6 @@
 services:
   loc:
-    image: nsulliv7/ser516-loc:${VERSION:-latest}
-    volumes:
-      - shared-repos:/shared/repos
-    networks:
-      - analysis-network
-    restart: always
-
-  code-comment:
-    image: mkapure/app-code-comment-coverage-backend:${VERSION:-latest}
+    image: nsulliv7/ser516-loc:v0.4.4
     volumes:
       - shared-repos:/shared/repos
     networks:
@@ -27,20 +19,14 @@ services:
     image: mkapure/defects-stats:${VERSION:-latest}
     volumes:
       - shared-repos:/shared/repos
-    networks:
-      - analysis-network
-    restart: always
-
-  defects-triage:
-    image: mkapure/app-defects-triage:${VERSION:-latest}
-    volumes:
-      - shared-repos:/shared/repos
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
     networks:
       - analysis-network
     restart: always
 
   mttr:
-    image: nsulliv7/ser516-mttr:${VERSION:-latest}
+    image: nsulliv7/ser516-mttr:v0.4.4
     volumes:
       - shared-repos:/shared/repos
     networks:
@@ -48,7 +34,7 @@ services:
     restart: always
 
   cc:
-    image: nsulliv7/ser516-cc:${VERSION:-latest}
+    image: nsulliv7/ser516-cc:v0.4.4
     volumes:
       - shared-repos:/shared/repos
     networks:
@@ -56,7 +42,7 @@ services:
     restart: always
 
   defects-over-time:
-    image: nsulliv7/ser516-defects-over-time:${VERSION:-latest}
+    image: nsulliv7/ser516-defects-over-time:v0.4.4
     networks:
       - analysis-network
     volumes:
@@ -64,7 +50,7 @@ services:
     restart: always
 
   cyclo:
-    image: nsulliv7/ser516-cyclo:${VERSION:-latest}
+    image: nsulliv7/ser516-cyclo:v0.4.4
     networks:
       - analysis-network
     volumes:
@@ -72,7 +58,7 @@ services:
     restart: always
 
   hal:
-    image: nsulliv7/ser516-hal:${VERSION:-latest}
+    image: nsulliv7/ser516-hal:v0.4.4
     networks:
       - analysis-network
     volumes:
@@ -80,35 +66,23 @@ services:
     restart: always
 
   ici:
-    image: nsulliv7/ser516-ici:${VERSION:-latest}
+    image: nsulliv7/ser516-ici:v0.4.4
     networks:
       - analysis-network
     volumes:
       - shared-repos:/shared/repos
     restart: always
+
   lcomhs:
-    image: gopu007/app-lcomhs:${VERSION:-latest}
+    image: gopu007/app-lcomhs:v.0.0.1
     networks:
       - analysis-network
     volumes:
       - shared-repos:/shared/repos
     restart: always
+
   lcom4:
-    image: gopu007/app-lcom4:${VERSION:-latest}
-    networks:
-      - analysis-network
-    volumes:
-      - shared-repos:/shared/repos
-    restart: always
-  efferent-coupling:
-    image: gopu007/app-efferent-coupling:${VERSION:-latest}
-    networks:
-      - analysis-network
-    volumes:
-      - shared-repos:/shared/repos
-    restart: always
-  afferent-coupling:
-    image: gopu007/app-afferent-coupling:${VERSION:-latest}
+    image: gopu007/app-lcom4:v.0.0.1
     networks:
       - analysis-network
     volumes:
@@ -116,7 +90,7 @@ services:
     restart: always
 
   store_metrics:
-    image: spraka52/ser516-store-metrics:${VERSION:-latest}
+    image: spraka52/ser516-store-metrics:v0.0.7
     environment:
       - MONGO_URI=mongodb://mongo:27017
     volumes:
@@ -128,11 +102,11 @@ services:
     restart: always
 
   middleware:
-    image: spraka52/ser516-middleware:${VERSION:-latest}
+    image: spraka52/ser516-middleware:v0.0.7
     ports:
       - "${GATEWAY_PORT}:5000"
     environment:
-      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment,lcomhs,lcom4,efferent-coupling,afferent-coupling,fogindex,defects-stats,defects-triage
+      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,ici,lcomhs,lcom4,fogindex,defects-stats
       - MONGO_URI=mongodb://mongo:27017
       - STORE_METRICS_URL=http://store_metrics:5000/store_metrics
     volumes:
@@ -149,12 +123,7 @@ services:
       - defects-over-time
       - lcomhs
       - lcom4
-      - efferent-coupling
-      - afferent-coupling
       - store_metrics
-      - code-comment
-      - defect-stats
-      - defects-triage
       - fogindex
       - mongo
     restart: always
@@ -168,7 +137,7 @@ services:
       - analysis-network
 
   client:
-    image: gopu007/app-frontend:${VERSION:-latest}
+    image: gopu007/app-frontend:v1.0.0
     ports:
       - "${CLIENT_PORT}:5173"
     restart: always
