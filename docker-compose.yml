@@ -137,7 +137,7 @@ services:
       - analysis-network
 
   client:
-    image: gopu007/app-frontend:v1.0.0
+    image: gopu007/app-frontend:v0.0.1
     ports:
       - "${CLIENT_PORT}:5173"
     restart: always
