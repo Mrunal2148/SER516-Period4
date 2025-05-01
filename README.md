@@ -39,20 +39,15 @@ Select Permissions:
 Step 4: Copy and Store the Token
   Copy the token immediately and store it securely (e.g., in a password manager).
 
-```bash
-touch .env
-echo GITHUB_TOKEN=your_github_token_here >> .env
-```
-
 ## How to Run
 
-1. Clone the repository.
+1. Clone the repository
 2. Navigate to the root directory of the cloned repository
-3. Run
+3. Paste your github token in the .env file (Please ensure there are no white spaces)
+4. Run
    ```bash
-   touch .env
    echo GITHUB_TOKEN=your_github_token_here >> .env
-   chmod -x start.sh
+   chmod -X start.sh
    ./start.sh
    ```
 7. The backend will be available at `http://localhost:8080`.
