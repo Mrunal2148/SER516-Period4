@@ -114,7 +114,13 @@ services:
     volumes:
       - shared-repos:/shared/repos
     restart: always
-
+  fan-in:
+    image: mkapure/app-fan-in-service:${VERSION:-latest}
+    networks:
+      - analysis-network
+    volumes:
+      - shared-repos:/shared/repos
+    restart: always 
   store_metrics:
     image: spraka52/ser516-store-metrics:${VERSION:-latest}
     environment:
@@ -132,7 +138,7 @@ services:
     ports:
       - "${GATEWAY_PORT}:5000"
     environment:
-      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment,lcomhs,lcom4,efferent-coupling,afferent-coupling,fogindex,defects-stats,defects-triage
+      - SERVICES=cc,loc,mttr,defects-over-time,cyclo,hal,ici,code-comment,lcomhs,lcom4,efferent-coupling,afferent-coupling,fogindex,defects-stats,defects-triage,fan-in
       - MONGO_URI=mongodb://mongo:27017
       - STORE_METRICS_URL=http://store_metrics:5000/store_metrics
     volumes:
@@ -151,6 +157,7 @@ services:
       - lcom4
       - efferent-coupling
       - afferent-coupling
+      - fan-in
       - store_metrics
       - code-comment
       - defect-stats
