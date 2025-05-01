@@ -44,7 +44,7 @@ Step 4: Copy and Store the Token
 1. Clone the repository
 2. Navigate to the root directory of the cloned repository
 3. Paste your github token in the .env file (Please ensure there are no white spaces)
-4. Run
+4. Run below commands (Please note - This script will prune existing docker containers from your local machine before creating new containers)
    ```bash
    echo GITHUB_TOKEN=your_github_token_here >> .env
    chmod -X start.sh
