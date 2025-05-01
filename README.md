@@ -1,4 +1,4 @@
-# SER516 Period 4 Fallback
+# SER516 Period 4
 
 # System Requirements
 
@@ -60,6 +60,6 @@ echo GITHUB_TOKEN=your_github_token_here >> .env
 
 ## Setting the Ports
 
-The ports for the backend and frontend are set in the `.env` file. You can change the ports by modifying the `GATEWAY_PORT` and `CLIENT_PORT` variables in the `.env` file. You must also add your GitHub token to the `.env` file as `GITHUB_TOKEN=your_token_here`
+The ports for the frontend are set in the `.env` file. You can change the ports by modifying the `CLIENT_PORT` variables in the `.env` file.
 
 
