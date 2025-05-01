@@ -124,6 +124,7 @@ services:
       - lcomhs
       - lcom4
       - store_metrics
+      - defects-stats
       - fogindex
       - mongo
     restart: always
@@ -137,7 +138,7 @@ services:
       - analysis-network
 
   client:
-    image: gopu007/app-frontend:v0.0.1
+    image: gopu007/app-frontend:v1.0.1
     ports:
       - "${CLIENT_PORT}:5173"
     restart: always

@@ -3,10 +3,11 @@
 ## How to Run
 
 1. Clone the repository.
-2. Run `docker-compose pull` to pull the images for the services.
-3. Run `docker-compose up` to start the services.
-4. The backend will be available at `http://localhost:8080`.
-5. The frontend will be available at `http://localhost:8043`.
+2. Update the `.env` file with a valid `GITHUB_TOKEN`
+3. Run `docker-compose pull` to pull the images for the services.
+4. Run `docker-compose up` to start the services.
+5. The backend will be available at `http://localhost:8080`.
+6. The frontend will be available at `http://localhost:8043`.
 
 ## How to Test the Backend
 
@@ -30,5 +31,5 @@ curl --location 'http://localhost:8080/get_metrics?repo_url=https%3A%2F%2Fgithub
 
 ## Setting the Ports
 
-The ports for the backend and frontend are set in the `.env` file. You can change the ports by modifying the `GATEWAY_PORT` and `CLIENT_PORT` variables in the `.env` file.
+The ports for the frontend are set in the `.env` file. You can change the ports by modifying the `CLIENT_PORT` variables in the `.env` file.
 
