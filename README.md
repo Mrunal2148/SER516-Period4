@@ -42,36 +42,21 @@ Step 4: Copy and Store the Token
 ```bash
 touch .env
 echo GITHUB_TOKEN=your_github_token_here >> .env
-echo GATEWAY_PORT=YOUR_PORT_NUMBER >> .env 
 ```
 
 ## How to Run
 
 1. Clone the repository.
-2. Run `docker-compose pull` to pull the images for the services.
-3. Run `docker-compose up` to start the services.
-4. The backend will be available at `http://localhost:8080`.
-5. The frontend will be available at `http://localhost:8043`.
-
-## How to Test the Backend
-
-1. Make sure the backend is running.
-
-2. Add a repo to the database by sending a POST request to `http://localhost:8080/add_repo`
-
-```bash
-curl --location 'http://localhost:8080/add_repo' \
---header 'Content-Type: application/json' \
---data '{
-    "repo_url": "https://github.com/kgary/ser421public"
-}'
-```
-
-3. Get a specific metric by sending a GET request to `http://localhost:8080/get_metric`
-
-```bash
-curl --location 'http://localhost:8080/get_metrics?repo_url=https%3A%2F%2Fgithub.com%2Fkgary%2Fser421public&metrics=hal%2Ccyclo'
-```
+2. Navigate to the root directory of the cloned repository
+3. Run
+   ```bash
+   touch .env
+   echo GITHUB_TOKEN=your_github_token_here >> .env
+   chmod -x start.sh
+   ./start.sh
+   ```
+7. The backend will be available at `http://localhost:8080`.
+8. The frontend will be available at `http://localhost:8043`.
 
 ## Setting the Ports
 
