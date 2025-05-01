@@ -1,7 +1,5 @@
 #!/bin/bash
-
-brew upgrade --cask docker
-brew upgrade docker-compose
+echo "Removing existing docker containers"
 docker-compose down -v --remove-orphans
 docker system prune -af
 set -e  # Exit immediately if a command exits with a non-zero status
